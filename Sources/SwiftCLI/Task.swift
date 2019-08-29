@@ -172,7 +172,7 @@ public class Task {
         }
         
         process.environment = env
-        process.run()
+        try? process.run()
     }
     
 }
@@ -323,8 +323,8 @@ extension Task {
 extension Task: CustomStringConvertible {
     public var description: String {
         var str = "Task(" + process.executableURL!.path + " " + process.arguments!.joined(separator: " ")
-        if process.currentDirectoryURL?.path != FileManager.default.currentDirectoryPath {
-            str += " , directory: " + process.currentDirectoryPath
+        if process.currentDirectoryURL!.path != FileManager.default.currentDirectoryPath {
+            str += " , directory: " + process.currentDirectoryURL!.path
         }
         str += ")"
         return str
