@@ -323,9 +323,16 @@ extension Task {
 extension Task: CustomStringConvertible {
     public var description: String {
         var str = "Task(" + process.executableURL!.path + " " + process.arguments!.joined(separator: " ")
+        #if os(Linux)
+        if process.currentDirectoryURL.path != FileManager.default.currentDirectoryPath {
+            str += " , directory: " + process.currentDirectoryURL!.path
+        }
+        #else
         if process.currentDirectoryURL!.path != FileManager.default.currentDirectoryPath {
             str += " , directory: " + process.currentDirectoryURL!.path
         }
+        #endif
+
         str += ")"
         return str
     }
